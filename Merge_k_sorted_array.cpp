@@ -57,3 +57,60 @@ class Solution
     
  }
 };
+
+
+
+// 2nd solution 
+
+
+
+
+#include <bits/stdc++.h> 
+
+class data{
+    public:
+    int val;
+    int apos;
+    int vpos;
+
+    data(int v,int ap,int vp){
+        val = v;
+        apos = ap;
+        vpos =vp;
+    }
+};
+
+class compare{
+    public:
+    bool operator()(data &d1,data &d2){
+        return d1.val > d2.val;
+    }
+};
+
+vector<int> mergeKSortedArrays(vector<vector<int>>&kArrays,int k)
+{
+
+  vector<int> ans; 
+
+ priority_queue<data,vector<data>,compare>pq;
+
+ for(int i=0;i<k;i++){
+     data d(kArrays[i][0],i,0);
+     pq.push(d);
+ }
+
+ while(!pq.empty()){
+     data curr = pq.top();
+     ans.push_back(curr.val);
+     pq.pop();
+     int ap = curr.apos , vp = curr.vpos;
+
+     if(vp+1 < kArrays[ap].size()){
+         data d(kArrays[ap][vp+1],ap,vp+1);
+         pq.push(d);
+     }
+ }
+
+   return ans;
+
+}
