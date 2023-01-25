@@ -1,20 +1,21 @@
-class Solution{
-public:	
-	vector<int> kLargest(int arr[], int n, int k) {
-	  
-	    vector<int>ans;
-        priority_queue<int,vector<int>> pq;
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
         
-        for(int i=0;i<n;i++){
-            pq.push(arr[i]);
-        }
-        
-        for(int i=0;i<k;i++){
-            ans.push_back(pq.top());
-            pq.pop();
-        }
-        
-        return ans;
-	}
+        priority_queue <int, vector<int>, greater<int> > pq;
 
+        for(int i=0;i<k;i++){
+            pq.push(nums[i]);
+        }
+
+        for(int i=k;i<nums.size();i++){
+            if(nums[i] > pq.top()){
+                pq.pop();
+                pq.push(nums[i]);
+            }
+        }
+
+        int ans = pq.top();
+        return ans;
+    }
 };
